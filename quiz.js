@@ -2,38 +2,92 @@
   var ct = document.getElementById("charTree");
   var bt = document.getElementById("buttonTree");
 
-  // ht.addEventListener("blur", validateHeight);
-  // ct.addEventListener("blur", validateChar);
-  bt.addEventListener("click", tree);
+  bt.addEventListener("click", treeStart);
 
 function validateHeight(){
-  var i=ht.value;
-  console.log("i", i);
-  console.log("typeof i", typeof i);
-  if (isNaN(i) === isNaN(NaN)){
-    alert("Not");
+  // Get height value from control
+  var treeHeight = ht.value;
+
+  // Check if invalid entries in Height field (Null, Zero or NaN)
+  if (isNaN(treeHeight) === isNaN(NaN)){
+    alert("Not a valid height");
+    // Remove bad value from text control
+    ht.value="";
+    // 0 means invalid entry
+    return 0;
+  }
+  else if (treeHeight.length === 0) {
+    alert("Not a valid height");
+    ht.value="";
+    return 0;
+  }
+  else if (treeHeight === "0") {
+    alert("Not a valid height");
     ht.value="";
     return 0;
   }
   else {
-    return parseInt(i);
+    // Return integer if valid number
+    return parseInt(treeHeight);
   }
     
 }
 
 function validateChar(){
-  var s=ct.value;
-  if (s.length !== 1) {
-    alert("Not");
-    return "N";
+  // Get contents of text control
+  var treeChar = ct.value;
+
+  // If string or Null, then not valid
+  if (treeChar.length !== 1) {
+    alert("Not a valid character");
+    // Remove bad value from text control
+    ct.value="";
+    // NN is returned if value bad
+    return "NN";
   }
   else {
-    alert("Yes");
-    return "Y";
+    // return character if valid
+    return treeChar;
   }
 }
 
-function tree(){
-  // var num = validateHeight();
-  var t = validateChar();
+function tree(treeObject){
+  var treeLevel = "";
+
+  // Loop from 1 to height of tree
+  for (var x=1; x<=treeObject.height; x++){
+
+    // Loop to add blank spaces to string needed to position the character
+    for (var y = (treeObject.height - x); y > 0; y--){
+      treeLevel += " ";
+    }
+
+    // Loop to add the characters to the tree level (2n-1)
+    for (var z = (2*x)-1; z > 0; z--){
+      treeLevel += treeObject.chara;
+    }
+
+    // Draw tree level
+    console.log("", treeLevel);
+
+    // reset treeLevel value
+    treeLevel = "";
+  }
+}
+
+function treeStart(){
+
+  // Validate the Height and Char entered into text fields
+  var numHeight = validateHeight();
+  var getChar = validateChar();
+
+  // If Height and Character entered are valid
+  if ((numHeight !== 0) && (getChar != "NN")){
+    
+    // Create Object
+    var treeObject = {height: numHeight, chara: getChar};
+    
+    // Call tree function and pass Object in order to draw tree
+    tree(treeObject);
+  }
 }
