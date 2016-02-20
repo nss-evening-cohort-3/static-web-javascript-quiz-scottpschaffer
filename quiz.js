@@ -3,6 +3,18 @@
   var bt = document.getElementById("buttonTree");
 
   bt.addEventListener("click", treeStart);
+  
+  ht.addEventListener("keydown", function(event){
+    if (event.keyCode === 13){
+      treeStart();
+    }
+  });
+
+  ct.addEventListener("keydown", function(event){
+    if (event.keyCode === 13){
+      treeStart();
+    }
+  });
 
 function validateHeight(){
   // Get height value from control
@@ -30,7 +42,6 @@ function validateHeight(){
     // Return integer if valid number
     return parseInt(treeHeight);
   }
-    
 }
 
 function validateChar(){
@@ -87,7 +98,16 @@ function treeStart(){
     // Create Object
     var treeObject = {height: numHeight, chara: getChar};
     
+    // Clear Console of old data
+    console.clear;
+
     // Call tree function and pass Object in order to draw tree
     tree(treeObject);
   }
+}
+
+function foo(event){
+  // if (e.keyCode = 13){
+    alert(event + " wawa");
+  // }
 }
